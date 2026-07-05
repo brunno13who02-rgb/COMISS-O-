@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planilha Financeira Premium</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+:root{
+--bg:#07111f;
+--card:#0f172a;
+--card2:#132238;
+--primary:#2563eb;
+--primary2:#60a5fa;
+--text:#ffffff;
+--border:rgba(96,165,250,0.25);
+--shadow:0 10px 30px rgba(0,0,0,0.7);
+}
+
+body{
+background:linear-gradient(135deg,#050505,#111111);
+color:var(--text);
+min-height:100vh;
+}
+
+header{
+background:rgba(255,255,255,0.03);
+backdrop-filter:blur(20px);
+padding:22px;
+text-align:center;
+font-size:28px;
+font-weight:600;
+letter-spacing:1px;
+border-bottom:1px solid var(--border);
+box-shadow:var(--shadow);
+color:var(--primary2);
+text-shadow:0 0 10px rgba(96,165,250,0.3);
+}
+
+nav{
+display:flex;
+justify-content:center;
+gap:15px;
+padding:25px;
+flex-wrap:wrap;
+}
+
+nav button{
+background:rgba(255,255,255,0.03);
+border:1px solid var(--border);
+color:var(--primary2);
+padding:12px 28px;
+cursor:pointer;
+font-size:14px;
+border-radius:30px;
+transition:0.4s;
+position:relative;
+overflow:hidden;
+font-weight:500;
+}
+
+nav button::after{
+content:"";
+position:absolute;
+left:0;
+top:0;
+width:0;
+height:100%;
+background:linear-gradient(135deg,var(--primary),#60a5fa);
+transition:0.4s;
+z-index:0;
+}
+
+nav button:hover::after{
+width:100%;
+}
+
+nav button span{
+position:relative;
+z-index:1;
+}
+
+nav button:hover{
+color:#000;
+transform:translateY(-2px);
+}
+
+nav button.active{
+background:linear-gradient(135deg,var(--primary),#60a5fa);
+color:#000;
+box-shadow:0 0 20px rgba(96,165,250,0.4);
+}
+
+.container{
+max-width:1000px;
+margin:30px auto;
+padding:35px;
+background:rgba(255,255,255,0.03);
+border:1px solid var(--border);
+border-radius:25px;
+backdrop-filter:blur(20px);
+box-shadow:var(--shadow);
+animation:fadeIn 0.6s ease;
+}
+
+.hidden{
+display:none;
+}
+
+h2{
+margin-bottom:25px;
+font-weight:600;
+color:var(--primary2);
+}
+
+.dashboard{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-bottom:30px;
+}
+
+.card{
+background:rgba(255,255,255,0.03);
+border:1px solid var(--border);
+padding:25px;
+border-radius:20px;
+box-shadow:var(--shadow);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+.card h3{
+font-size:14px;
+opacity:0.7;
+margin-bottom:10px;
+}
+
+.card p{
+font-size:28px;
+font-weight:700;
+color:var(--primary2);
+}
+
+label{
+font-size:13px;
+opacity:0.8;
+color:#d1d5db;
+}
+
+input, select{
+width:100%;
+padding:15px;
+margin-bottom:18px;
+border:none;
+border-radius:14px;
+background:rgba(255,255,255,0.04);
+border:1px solid rgba(255,255,255,0.05);
+color:white;
+outline:none;
+transition:0.3s;
+font-size:14px;
+font-family:'Poppins',sans-serif;
+}
+
+select option {
+background: #0f172a;
+color: white;
+}
+
+input:focus, select:focus{
+border:1px solid var(--primary);
+box-shadow:0 0 15px rgba(96,165,250,0.3);
+background:rgba(255,255,255,0.07);
+}
+
+button{
+background:linear-gradient(135deg,var(--primary),#60a5fa);
+color:#000;
+border:none;
+padding:13px 24px;
+border-radius:14px;
+cursor:pointer;
+transition:0.3s;
+font-weight:600;
+}
+
+button:hover{
+transform:translateY(-2px);
+box-shadow:0 10px 25px rgba(96,165,250,0.35);
+}
+
+#abas{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+#abas button{
+background:rgba(255,255,255,0.04);
+border:1px solid var(--border);
+color:var(--primary2);
+border-radius:20px;
+padding:8px 15px;
+font-size:13px;
+transition:0.3s;
+}
+
+#abas button:hover{
+background:linear-gradient(135deg,var(--primary),#60a5fa);
+color:#000;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:15px;
+overflow:hidden;
+border-radius:20px;
+}
+
+th,td{
+padding:16px;
+text-align:center;
+}
+
+th{
+background:linear-gradient(135deg,var(--primary),#60a5fa);
+color:#000;
+font-weight:600;
+}
+
+tbody tr{
+background:rgba(255,255,255,0.03);
+transition:0.3s;
+border-bottom:1px solid rgba(255,255,255,0.03);
+}
+
+tbody tr:hover{
+background:rgba(96,165,250,0.08);
+transform:scale(1.01);
+}
+
+tfoot td{
+font-weight:bold;
+background:rgba(96,165,250,0.08);
+}
+
+@media(max-width:700px){
+.container{
+margin:15px;
+padding:20px;
+}
+header{
+font-size:22px;
+}
+.card p{
+font-size:22px;
+}
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(15px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+💰 Planilha Financeira Premium
+</header>
+
+<nav>
+<button class="active" onclick="showPage('entrada',event)">
+<span>Entrada</span>
+</button>
+
+<button onclick="showPage('relatorio',event)">
+<span>Relatórios</span>
+</button>
+</nav>
+
+<div class="container" id="entrada">
+
+<div class="dashboard">
+    </div>
+
+<h2>Novo Lançamento</h2>
+
+<label>Mês/Ano</label>
+<input type="month" id="mesAno">
+
+<label>Valor</label>
+<input type="number" id="valor" step="0.01">
+
+<button onclick="salvar()">Salvar</button>
+
+</div>
+
+<div class="container hidden" id="relatorio">
+
+<h2>Relatórios</h2>
+
+<div id="abas"></div>
+
+<div id="conteudo"></div>
+
+</div>
+
+<script>
+
+function carregar(){
+const dados = localStorage.getItem("dados");
+return dados ? JSON.parse(dados) : {};
+}
+
+function salvarDados(d){
+localStorage.setItem("dados",JSON.stringify(d));
+}
+
+let registros = carregar();
+let mesFiltroDashboard = ""; // Controla o mês ativo no Dashboard da Home
+
+// Inicializa o Dashboard
+atualizarDashboard();
+
+function showPage(page,event){
+document.getElementById("entrada").classList.add("hidden");
+document.getElementById("relatorio").classList.add("hidden");
+
+document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+
+document.getElementById(page).classList.remove("hidden");
+
+event.target.closest("button").classList.add("active");
+
+if(page==="relatorio"){
+atualizarRelatorio();
+}
+}
+
+function salvar(){
+const mes = document.getElementById("mesAno").value;
+const valor = parseFloat(document.getElementById("valor").value);
+
+if(!mes || isNaN(valor)){
+alert("Preencha os campos corretamente.");
+return;
+}
+
+if(!registros[mes]){
+registros[mes] = [];
+}
+
+registros[mes].push(valor);
+salvarDados(registros);
+
+document.getElementById("mesAno").value="";
+document.getElementById("valor").value="";
+
+// Automaticamente foca o dashboard no mês do último lançamento inserido
+mesFiltroDashboard = mes;
+
+atualizarDashboard();
+alert("Valor salvo com sucesso!");
+}
+
+function atualizarDashboard(){
+const db = document.querySelector(".dashboard");
+const mesesDisponiveis = Object.keys(registros).sort().reverse(); // Ordena do mais recente para o mais antigo
+
+// Se o mês selecionado sumiu ou nunca foi definido, pega o mais recente disponível
+if (!mesFiltroDashboard || !registros[mesFiltroDashboard]) {
+    mesFiltroDashboard = mesesDisponiveis[0] || "";
+}
+
+let totalMes = 0;
+let totalLancamentos = 0;
+
+if (mesFiltroDashboard && registros[mesFiltroDashboard]) {
+    totalMes = registros[mesFiltroDashboard].reduce((a, b) => a + b, 0);
+    totalLancamentos = registros[mesFiltroDashboard].length;
+}
+
+const media = totalLancamentos > 0 ? (totalMes / totalLancamentos) : 0;
+
+// Cria dinamicamente as opções do seletor de meses do dashboard
+let options = mesesDisponiveis.map(m => `<option value="${m}" ${m === mesFiltroDashboard ? 'selected' : ''}>${m}</option>`).join("");
+if (mesesDisponiveis.length === 0) {
+    options = `<option value="">Nenhum dado lançado</option>`;
+}
+
+db.innerHTML = `
+    <div style="grid-column: 1 / -1; margin-bottom: 5px;">
+        <label>Visualizar Métricas do Mês:</label>
+        <select id="filtroMesDash" onchange="mudarMesDashboard(this.value)" style="margin-top: 5px; margin-bottom: 5px;">
+            ${options}
+        </select>
+    </div>
+    <div class="card">
+        <h3>Total Acumulado</h3>
+        <p>R$ ${totalMes.toFixed(2)}</p>
+    </div>
+    <div class="card">
+        <h3>Nº de Lançamentos</h3>
+        <p>${totalLancamentos}</p>
+    </div>
+    <div class="card">
+        <h3>Média por Registro</h3>
+        <p>R$ ${media.toFixed(2)}</p>
+    </div>
+`;
+}
+
+function mudarMesDashboard(mes) {
+    mesFiltroDashboard = mes;
+    atualizarDashboard();
+}
+
+function atualizarRelatorio(){
+const abas = document.getElementById("abas");
+const conteudo = document.getElementById("conteudo");
+
+abas.innerHTML="";
+conteudo.innerHTML="";
+
+const meses = Object.keys(registros);
+
+meses.forEach((mes,index)=>{
+    const btn = document.createElement("button");
+    btn.innerText = mes;
+    btn.onclick = ()=>mostrarMes(mes);
+    abas.appendChild(btn);
+
+    const div = document.createElement("div");
+    div.id = "mes-"+mes;
+
+    if(index!==0){
+        div.classList.add("hidden");
+    }
+
+    let linhas="";
+    registros[mes].forEach((v, idx)=>{
+        linhas += `
+        <tr>
+            <td>${mes}</td>
+            <td>R$ ${v.toFixed(2)}</td>
+            <td>
+                <button onclick="excluirLancamento('${mes}', ${idx})" style="background: #ef4444; color: #fff; padding: 6px 12px; font-size: 12px; border-radius: 8px;">
+                    Excluir
+                </button>
+            </td>
+        </tr>
+        `;
+    });
+
+    const total = registros[mes].reduce((a,b)=>a+b,0);
+
+    div.innerHTML = `
+    <table>
+        <thead>
+            <tr>
+                <th>Mês</th>
+                <th>Valor</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${linhas}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">Total</td>
+                <td id="total-${mes}">R$ ${total.toFixed(2)}</td>
+            </tr>
+            <tr>
+                <td colspan="2">Comissão (%)</td>
+                <td>
+                    <input type="number" id="porc-${mes}" placeholder="%" style="width: 70px; margin-bottom: 0; padding: 8px; display: inline-block; vertical-align: middle;">
+                    <button onclick="calcular('${mes}')" style="padding: 8px 12px; vertical-align: middle;">
+                        Calcular
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">Valor da Comissão</td>
+                <td id="comissao-${mes}">-</td>
+            </tr>
+        </tfoot>
+    </table>
+    `;
+
+    conteudo.appendChild(div);
+});
+
+const primeiroMes = meses[0];
+if(primeiroMes) {
+    mostrarMes(primeiroMes);
+}
+}
+
+function mostrarMes(mes){
+document.querySelectorAll("#conteudo > div").forEach(d=>d.classList.add("hidden"));
+document.getElementById("mes-"+mes).classList.remove("hidden");
+
+document.querySelectorAll("#abas button").forEach(btn => {
+    if(btn.innerText === mes) {
+        btn.style.background = "linear-gradient(135deg, var(--primary), #60a5fa)";
+        btn.style.color = "#000";
+    } else {
+        btn.style.background = "rgba(255,255,255,0.04)";
+        btn.style.color = "var(--primary2)";
+    }
+});
+}
+
+function excluirLancamento(mes, index){
+if(confirm("Tem certeza que deseja excluir este lançamento?")){
+    registros[mes].splice(index, 1);
+    
+    if(registros[mes].length === 0){
+        delete registros[mes];
+    }
+    
+    salvarDados(registros);
+    atualizarDashboard();
+    atualizarRelatorio();
+}
+}
+
+function calcular(mes){
+const totalText = document.getElementById("total-"+mes).innerText;
+const total = parseFloat(totalText.replace("R$",""));
+const porc = parseFloat(document.getElementById("porc-"+mes).value);
+
+if(isNaN(porc)){
+    alert("Digite a porcentagem");
+    return;
+}
+
+const comissao = total * porc / 100;
+document.getElementById("comissao-"+mes).innerText = "R$ " + comissao.toFixed(2);
+}
+
+</script>
+
+</body>
+</html>
